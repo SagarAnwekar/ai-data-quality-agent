@@ -1,0 +1,5 @@
+services:
+  quality-agent:
+    build: .
+    environment:
+      APP_ENV: development

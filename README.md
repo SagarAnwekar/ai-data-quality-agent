@@ -1,42 +1,72 @@
-# 🤖 AI Experiments — Sagar Anwekar
+# AI Data Quality Agent
 
-> Exploring AI, Machine Learning, and prompt engineering for business applications
+> A business-focused data quality pipeline that validates structured data, detects anomalies, and produces explainable quality findings.
 
-## 🧪 Experiments
+[![CI](https://github.com/SagarAnwekar/ai-data-quality-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/SagarAnwekar/ai-data-quality-agent/actions/workflows/ci.yml)
 
-| # | Experiment | Description | Status |
-|---|-----------|-------------|--------|
-| 1 | Prompt Engineering Basics | Mastering Claude, GPT prompt techniques | 🟢 Active |
-| 2 | Demand Forecasting ML | Applying ML to Mauli Collection data | 🟡 Planned |
-| 3 | Business Analytics AI | AI-assisted data analysis workflows | 🟡 Planned |
-| 4 | NLP for Business | Sentiment analysis, text classification | 🔵 Exploring |
+## Problem
 
-## 📁 Structure
+Data quality issues are expensive because analysts often discover them after reports fail or stakeholders lose confidence.
 
-```
-ai-experiments/
-├── prompt-engineering/     ← Prompt templates & techniques
-├── ml-models/              ← Machine learning experiments
-│   ├── demand-forecasting/ ← Forecasting models
-│   └── classification/    ← Classification tasks
-├── notebooks/              ← Jupyter notebooks
-├── datasets/               ← Sample datasets
-└── resources.md            ← Learning resources & links
+This project turns a raw CSV into a repeatable quality assessment with explicit rules, anomaly signals, and an explanation layer.
+
+## Architecture
+
+```mermaid
+flowchart LR
+    F[CSV / Data Source] --> P[Profile]
+    P --> V[Validation Rules]
+    V --> A[Anomaly Detection]
+    A --> L[LLM Explanation Boundary]
+    L --> R[Quality Report]
+    R --> E[Executive Action List]
 ```
 
-## 🛠️ Tools & Libraries
+## Engineering contract
 
-![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
-![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white)
-![Scikit Learn](https://img.shields.io/badge/Scikit_Learn-F7931E?style=flat-square&logo=scikit-learn&logoColor=white)
-![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=flat-square&logo=jupyter&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=pandas&logoColor=white)
+- deterministic validation rules first
+- anomaly detection is separated from narrative generation
+- LLM output is explanatory, not the source of truth
+- synthetic/example data only
+- tests cover core validation behavior
+- CI runs on every pull request
 
-## 📚 Learning Resources
+## Target structure
 
-- [Andrew Ng's ML Specialization — Coursera](https://www.coursera.org/specializations/machine-learning-introduction)
-- [Google Data Analytics Certificate](https://www.coursera.org/professional-certificates/google-data-analytics)
-- [fast.ai Practical Deep Learning](https://course.fast.ai/)
+```text
+ai-data-quality-agent/
+├── src/quality_agent/
+│   ├── validation/
+│   ├── profiling/
+│   ├── anomalies/
+│   ├── explanations/
+│   └── reporting/
+├── tests/
+├── docs/
+├── sample_data/
+├── .github/
+├── Dockerfile
+├── docker-compose.yml
+├── pyproject.toml
+├── SECURITY.md
+└── README.md
+```
 
----
-*MBA Business Analytics @ DIMR Pune | Building AI + Business intuition together*
+## Evaluation plan
+
+| Dimension | Example metric |
+|---|---|
+| schema validity | invalid rows caught |
+| completeness | null-rate detection |
+| consistency | rule violations |
+| anomaly precision | analyst-confirmed anomalies |
+| explanation quality | groundedness / reviewer score |
+| operational quality | runtime and failure rate |
+
+## Status
+
+**Milestone 1:** engineering baseline + health test. Subsequent commits will add profiling, validation, anomaly, explanation, and reporting implementations.
+
+## License
+
+MIT. See [`LICENSE`](LICENSE).
